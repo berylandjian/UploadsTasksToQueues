@@ -1,0 +1,21 @@
+name = "uploads-tasks-to-queues"
+main = "src/index.ts"
+compatibility_date = "2024-10-22"
+
+[observability]
+enabled = true
+
+# 配置Durable Object
+[[durable_objects.bindings]]
+name = "TASK_QUEUE_MANAGER"  # 修改为我们实际使用的DO名称
+class_name = "TaskQueueManager"  # 修改为我们实际的DO类名
+
+# DO migrations
+[[migrations]]
+tag = "v1"
+new_classes = ["TaskQueueManager"]
+
+# 配置Queue Producer
+[[queues.producers]]
+binding = "CHAPTER_QUEUE"  # 这是在代码中使用的绑定名称
+queue = "chapters-queues-tasks"  # 你的Queue ID
